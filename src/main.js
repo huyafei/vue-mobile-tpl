@@ -1,5 +1,6 @@
 import Vue from "vue";
 import App from "./App.vue";
+import 'babel-polyfill'
 import router from "./router/router";
 import store from "./store/index";
 /*自定义样式*/
