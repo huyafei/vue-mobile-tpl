@@ -1,16 +1,21 @@
-import Vue from "vue";
 import axios from "axios";
+import Cookies from "js-cookie";
+import { BASE_URLS } from "@/utils/url";
+axios.defaults.baseURL = BASE_URLS.baseUrl;
 
-// axios.defaults.baseURL = 'https://api.example.com';
+// axios.defaults.headers.post["Content-Type"] = "application/json";
+// axios.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+// 超时时间
+// axios.defaults.timeout = 15000;
+
 // 添加请求拦截器
 axios.interceptors.request.use(
   function(config) {
     //全局加token
-    // let token=localStorage.getItem('token');
-    // if(token){
-    //   config.headers.Authorization=token;
-    // }
-    // console.log(config)
+    let token = Cookies.get("token");
+    if (token) {
+      config.headers.Authorization = token;
+    }
     return config;
   },
   function(error) {

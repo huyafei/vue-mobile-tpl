@@ -14,7 +14,7 @@
 // @ is an alias to /src
 
 export default {
-  name: "Index",
+  name: "HomeIndex",
   data() {
     return {
       option: {
@@ -41,6 +41,4 @@ export default {
   }
 };
 </script>
-<style scoped lang="less">
-@import "index";
-</style>
+<style scoped lang="less"></style>
