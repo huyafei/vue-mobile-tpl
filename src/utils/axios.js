@@ -1,6 +1,8 @@
 import axios from "axios";
 import Cookies from "js-cookie";
+import { Dialog, Toast } from "vant";
 import { BASE_URLS } from "@/utils/url";
+
 axios.defaults.baseURL = BASE_URLS.baseUrl;
 
 // axios.defaults.headers.post["Content-Type"] = "application/json";
@@ -28,10 +30,25 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   function(response) {
     // 对响应数据做点什么
-    return response;
+
+    const res = response.data;
+    if (res.errno === 501) {
+      Toast.fail("请登录");
+      setTimeout(() => {
+        window.location = "/login";
+      }, 1500);
+      return Promise.reject("error");
+    } else {
+      return response;
+    }
   },
   function(error) {
     // 对响应错误做点什么
+    console.log("err" + error);
+    Dialog.alert({
+      title: "警告",
+      message: "登录连接超时"
+    });
     return Promise.reject(error);
   }
 );

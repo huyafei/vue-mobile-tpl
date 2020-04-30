@@ -28,14 +28,21 @@ module.exports = {
   //   types.forEach(type =>
   //     addStyleResource(config.modules.rule("less").oneOf(type))
   //   );
+  // },
+  // less: {
+  //   loaderOptions: {
+  //     sass: {
+  //       data:
+  //         '@import "@/assets/scss/_var.scss";@import "@/assets/scss/_mixin.scss";'
+  //     }
+  //   }
   // }
 };
-function addStyleResource (rule) {
-  rule.use('style-resource')
-    .loader('style-resources-loader')
-    .options({
-      patterns: [
-        path.resolve(__dirname, './src/assets/less/color.less'),
-      ],
-    })
-}
+// function addStyleResource(rule) {
+//   rule
+//     .use("style-resource")
+//     .loader("style-resources-loader")
+//     .options({
+//       patterns: [path.resolve(__dirname, "./src/assets/less/color.less")]
+//     });
+// }

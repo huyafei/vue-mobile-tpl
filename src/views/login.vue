@@ -3,9 +3,7 @@
     <van-button
       type="primary"
       @click="
-        () => {
-          $router.push('/home');
-        }
+       routerRedirect()
       "
       >跳转</van-button
     >
@@ -36,7 +34,12 @@ export default {
   beforeDestroy() {},
   //销毁后
   destroyed() {},
-  methods: {}
+  methods: {
+    routerRedirect() {
+      const { query } = this.$route;
+      this.$router.replace(query.redirect || "/home");
+    }
+  }
 };
 </script>
 <style scoped lang="less"></style>
