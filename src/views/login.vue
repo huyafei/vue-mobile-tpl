@@ -1,12 +1,7 @@
 <template>
   <div class="">
-    <van-button
-      type="primary"
-      @click="
-       routerRedirect()
-      "
-      >跳转</van-button
-    >
+    <van-button type="primary" @click="routerRedirect()">未登录跳转 </van-button>
+    <van-button type="primary" @click="login()">登录跳转 </van-button>
   </div>
 </template>
 <script>
@@ -38,7 +33,13 @@ export default {
     routerRedirect() {
       const { query } = this.$route;
       this.$router.replace(query.redirect || "/home");
+    },
+    login(){
+      this.$cookies.set("token",'123')
+      const { query } = this.$route;
+      this.$router.replace(query.redirect || "/home");
     }
+
   }
 };
 </script>

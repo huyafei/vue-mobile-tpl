@@ -1,7 +1,7 @@
 export const other = [
   {
     path: "/",
-    redirect: "/login"
+    redirect: "/home/index"
   },
   {
     path: "/login",

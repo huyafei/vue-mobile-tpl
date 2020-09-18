@@ -20,7 +20,10 @@ router.beforeEach((to, from, next) => {
       next();
     } else {
       Toast("请先登录");
-      next({ path: "/login", query: { redirect: to.path } });
+      if(from.name !== "Login"){
+        next({ path: "/login", query: { redirect: to.path } });
+      }
+
     }
   }
 });
