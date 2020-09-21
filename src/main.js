@@ -3,6 +3,10 @@ import App from "./App.vue";
 import "babel-polyfill";
 import router from "./router/router";
 import store from "./store/index";
+// 自适应：方式1
+// import "@/utils/flexible";
+// 自适应：方式2
+import "amfe-flexible";
 /*自定义样式*/
 import "./assets/css/normalize.css";
 import "./assets/css/common.css";
