@@ -1,6 +1,7 @@
 const path = require("path");
 const autoprefixer = require("autoprefixer");
 const pxtorem = require("postcss-pxtorem");
+const CompressionPlugin = require("compression-webpack-plugin")
 module.exports = {
   publicPath: process.env.NODE_ENV === "production" ? "/" : "/",
   // outputDir: 在npm run build时 生成文件的目录 type:string, default:'dist'
@@ -25,11 +26,11 @@ module.exports = {
     // host: 'wxtest.com',
     // proxy: {
     // "/api": {
-    //   target: "http://192.168.0.188:8080/api",
-    //   ws: true,
+    //   target: "http://192.168.0.188:8080",// 设置调用的接口域名和端口号
+    //   ws: true, // 代理websocket
     //   changeOrigin: true,
-    //   pathRewrite: {
-    //     "^/api": "/"
+    //   pathRewrite: { // 路径重写
+    //     "^/api": ""
     //   }
     // }
     // } // 配置多个代理,
@@ -83,14 +84,25 @@ module.exports = {
     }
   },
   // webpack相关配置
-  // 如果这个值是一个对象，则会通过 webpack-merge 合并到最终的配置中。如果这个值是一个函数，则会接收被解析的配置作为参数。该函数及可以修改配置并不返回任何东西，也可以返回一个被克隆或合并过的配置版本。
+  // 如果这个值是一个对象，则会通过 webpack-merge 合并到最终的配置中。
+  // 如果这个值是一个函数，则会接收被解析的配置作为参数。该函数及可以修改配置并不返回任何东西，也可以返回一个被克隆或合并过的配置版本。
   configureWebpack: config => {
     if (process.env.NODE_ENV === "production") {
       // 为生产环境修改配置...
+      return {
+        plugins: [
+          new CompressionPlugin({
+            test: /\.js$|\.css|\.less/, // 匹配文件名
+            threshold: 10240, // 对超过10k的数据压缩
+            deleteOriginalAssets: false // 不删除源文件
+          })
+        ]
+      }
     } else {
       // 为开发环境修改配置...
     }
   },
+  // Webpack配置另一种写法
   // 是一个函数，会接收一个基于 webpack-chain 的 ChainableConfig 实例。允许对内部的 webpack 配置进行更细粒度的修改。
   chainWebpack: config => {
     /*config.module

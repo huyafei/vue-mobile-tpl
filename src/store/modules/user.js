@@ -1,10 +1,16 @@
 import "../../utils/axios";
 
 const user = {
+  namespaced: true,
   state: {
     userInfo: "",
     username: "",
     token: localStorage.getItem("token")
+  },
+  getters:{
+    userInfo:(state)=>{
+      return state.userInfo
+    }
   },
   mutations: {
     SET_USERINFO: (state, userInfo) => {

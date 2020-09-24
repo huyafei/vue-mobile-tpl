@@ -12,9 +12,10 @@
 
 <script>
 // @ is an alias to /src
-
+import { mapGetters, mapActions, mapMutations } from "vuex";
 export default {
   name: "HomeIndex",
+  components: {},
   data() {
     return {
       option: {
@@ -34,7 +35,12 @@ export default {
       }
     };
   },
-  components: {},
+  computed: {
+    ...mapActions({
+      setUserInfo: "user/SET_USERINFO"
+    }),
+    ...mapMutations(["user/getUserInfo"])
+  },
   mounted() {
     let myChart = this.$echarts.init(document.getElementById("echars"));
     myChart.setOption(this.option, true);

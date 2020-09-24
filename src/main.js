@@ -3,6 +3,7 @@ import App from "./App.vue";
 import "babel-polyfill";
 import router from "./router/router";
 import store from "./store/index";
+import * as filters from "./filters";
 // 自适应：方式1
 // import "@/utils/flexible";
 // 自适应：方式2
@@ -33,6 +34,10 @@ Vue.prototype.$cookies = Cookies;
 import echarts from "echarts";
 
 Vue.prototype.$echarts = echarts;
+
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key]);
+});
 
 Vue.config.productionTip = false;
 
