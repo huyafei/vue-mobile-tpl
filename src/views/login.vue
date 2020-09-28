@@ -47,5 +47,6 @@ export default {
 <style scoped lang="less">
   .wz{
     font-size: 16px;
+    color: @cl-blue;
   }
 </style>

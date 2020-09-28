@@ -48,7 +48,7 @@ module.exports = {
       // 给 sass-loader 传递选项
       less: {
         // @/ 是 src/ 的别名
-        data: `@import "@/assets/less/color.scss";`
+        // data: `@import "~@/assets/less/color.less";`
       },
       postcss: {
         plugins: [
@@ -105,6 +105,8 @@ module.exports = {
   // Webpack配置另一种写法
   // 是一个函数，会接收一个基于 webpack-chain 的 ChainableConfig 实例。允许对内部的 webpack 配置进行更细粒度的修改。
   chainWebpack: config => {
+    const types = ['vue-modules', 'vue', 'normal-modules', 'normal']
+    types.forEach(type => addStyleResource(config.module.rule('less').oneOf(type)))
     /*config.module
       .rule('images')
       .use('url-loader')
@@ -121,3 +123,12 @@ module.exports = {
     // ...
   }
 };
+function addStyleResource (rule) {
+  rule.use('style-resource')
+    .loader('style-resources-loader')
+    .options({
+      patterns: [
+        path.resolve(__dirname, './src/assets/less/color.less'),
+      ],
+    })
+}
