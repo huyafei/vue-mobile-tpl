@@ -4,10 +4,11 @@ import "babel-polyfill";
 import router from "./router/router";
 import store from "./store/index";
 import * as filters from "./filters";
+import * as componetns from "./components";
 // 自适应：方式1
-// import "@/utils/flexible";
+import "@/utils/flexible";
 // 自适应：方式2
-import "amfe-flexible";
+// import "amfe-flexible";
 /*自定义样式*/
 import "./assets/css/normalize.css";
 import "./assets/css/common.css";
@@ -37,6 +38,9 @@ Vue.prototype.$echarts = echarts;
 
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key]);
+});
+Object.keys(componetns).forEach(key => {
+  Vue.component(componetns[key].name, componetns[key]);
 });
 
 Vue.config.productionTip = false;

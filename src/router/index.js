@@ -85,4 +85,4 @@ export const my = {
     }
   ]
 };
-export const routes = [...other,home, classify, cart, my];
+export const routes = [...other, home, classify, cart, my];

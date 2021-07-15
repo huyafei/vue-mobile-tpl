@@ -6,12 +6,13 @@ import { routes } from "./index";
 Vue.use(Router);
 
 const router = new Router({
-  mode: "history",
+  // mode: "history",
   base: process.env.BASE_URL,
   routes: routes
 });
 
 router.beforeEach((to, from, next) => {
+  document.getElementById("app").scrollTop = 0;
   if (to.name === "Login") {
     next();
   } else {
@@ -20,10 +21,9 @@ router.beforeEach((to, from, next) => {
       next();
     } else {
       Toast("请先登录");
-      if(from.name !== "Login"){
+      if (from.name !== "Login") {
         next({ path: "/login", query: { redirect: to.path } });
       }
-
     }
   }
 });

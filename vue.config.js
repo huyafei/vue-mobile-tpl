@@ -7,7 +7,7 @@ module.exports = {
   // outputDir: 在npm run build时 生成文件的目录 type:string, default:'dist'
   // outputDir: 'dist',
   // pages:{ type:Object,Default:undfind },
-  // eslint-loader是否在保存的时候检查
+  // eslint-loader是否在保存的时候检查'postcss-px2rem
   lintOnSave: true,
   // 是否使用包含运行时编译器的Vue核心的构建
   runtimeCompiler: false,
@@ -58,12 +58,13 @@ module.exports = {
            * 需要在main.js 引入utils下  flexible.js 保存本地为了可以修改
            * 或者 npm install lib-flexible --save 在main.js 引入import 'lib-flexible'
            * */
-          // require('postcss-px2rem')({
-          //   // 以设计稿750为例， 750 / 10 = 75
-          //   //remUnit通常我们是根据设计图来定这个值，
-          //   //假如设计图给的宽度是750，我们通常就会把remUnit设置为75，这样我们写样式时，可以直接按照设计图标注的宽高来1:1还原开发。
-          //   remUnit: 75
-          // }),
+          require('postcss-px2rem')({
+            // 以设计稿750为例， 750 / 10 = 75
+            //remUnit通常我们是根据设计图来定这个值，
+            //假如设计图给的宽度是750，我们通常就会把remUnit设置为75，这样我们写样式时，可以直接按照设计图标注的宽高来1:1还原开发。
+            //使用移动端ui框架的话，改为37.5 样式/2
+            remUnit: 37.5
+          }),
           /*
            *  自适应：方式2
            *  amfe-flexible
@@ -74,19 +75,19 @@ module.exports = {
            *
            * */
 
-          autoprefixer(),
-          pxtorem({
-            rootValue: 37.5,
-            propList: ["*"]
-          })
+          // autoprefixer(),
+          // pxtorem({
+          //   rootValue: 37.5,
+          //   propList: ["*"]
+          // })
         ]
       }
     }
   },
-  // webpack相关配置
-  // 如果这个值是一个对象，则会通过 webpack-merge 合并到最终的配置中。
-  // 如果这个值是一个函数，则会接收被解析的配置作为参数。该函数及可以修改配置并不返回任何东西，也可以返回一个被克隆或合并过的配置版本。
-  configureWebpack: config => {
+  // 是一个函数，会接收一个基于 webpack-chain 的 ChainableConfig 实例。允许对内部的 webpack 配置进行更细粒度的修改。
+  chainWebpack: config => {
+    const types = ['vue-modules', 'vue', 'normal-modules', 'normal']
+    types.forEach(type => addStyleResource(config.module.rule('less').oneOf(type)))
     if (process.env.NODE_ENV === "production") {
       // 为生产环境修改配置...
       return {
@@ -101,20 +102,6 @@ module.exports = {
     } else {
       // 为开发环境修改配置...
     }
-  },
-  // Webpack配置另一种写法
-  // 是一个函数，会接收一个基于 webpack-chain 的 ChainableConfig 实例。允许对内部的 webpack 配置进行更细粒度的修改。
-  chainWebpack: config => {
-    const types = ['vue-modules', 'vue', 'normal-modules', 'normal']
-    types.forEach(type => addStyleResource(config.module.rule('less').oneOf(type)))
-    /*config.module
-      .rule('images')
-      .use('url-loader')
-        .loader('url-loader')
-        .tap(options => {
-          // 修改它的选项...
-          return options
-        })*/
   },
   // PWA 插件相关配置
   pwa: {},
